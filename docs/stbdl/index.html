@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Docs</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background-color: #ffffff;
+            color: #1e1e1e;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .logo span {
+            color: #2563eb;
+            font-weight: 700;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 500;
+            font-size: 15px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.1s;
+        }
+        nav ul li a:hover {
+            border-bottom-color: #2563eb;
+        }
+
+        .doc-wrapper {
+            padding: 100px 0 60px;
+            background-color: #ffffff;
+        }
+        .doc-grid {
+            display: flex;
+            gap: 48px;
+            align-items: flex-start;
+        }
+
+        .doc-sidebar {
+            flex: 0 0 280px;
+            background-color: #ffffff;
+            border: 1px solid #edf2f7;
+            padding: 24px 0 24px 16px;
+            position: sticky;
+            top: 100px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #4b5563;
+            padding-left: 16px;
+            margin-bottom: 20px;
+        }
+        .doc-toc {
+            list-style: none;
+        }
+        .doc-toc li {
+            margin-bottom: 2px;
+        }
+        .toc-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 8px 16px 8px 16px;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1e293b;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.1s;
+        }
+        .toc-level-2 .toc-btn {
+            padding-left: 32px;
+            font-size: 14px;
+            color: #334155;
+        }
+        .toc-level-3 .toc-btn {
+            padding-left: 48px;
+            font-size: 13px;
+            color: #475569;
+        }
+        .toc-btn:hover {
+            background-color: #f8fafc;
+            border-left-color: #9bb7f4;
+        }
+        .toc-btn.active {
+            background-color: #eef4ff;
+            border-left-color: #2563eb;
+            color: #0f2b66;
+            font-weight: 600;
+        }
+
+        .doc-main {
+            flex: 1;
+            min-width: 0;
+        }
+        .doc-main h1, .doc-main h2, .doc-main h3 {
+            scroll-margin-top: 100px;
+        }
+        .doc-main h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0a1a33;
+            margin-bottom: 8px;
+        }
+        .doc-main h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 48px 0 16px 0;
+            border-bottom: 1px solid #e9eef3;
+            padding-bottom: 8px;
+        }
+        .doc-main h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3c5e;
+            margin: 36px 0 12px;
+        }
+        .doc-main p {
+            margin-bottom: 20px;
+            color: #1f2b40;
+        }
+        .doc-main a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .doc-main a:hover {
+            text-decoration: underline;
+        }
+
+        pre {
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+            padding: 20px;
+            font-size: 14px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            overflow-x: auto;
+            margin: 28px 0;
+        }
+        .hljs {
+            background: transparent;
+            padding: 0;
+        }
+
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 28px 0;
+            font-size: 15px;
+        }
+        .doc-table th {
+            background-color: #f1f5f9;
+            color: #0f2b4f;
+            font-weight: 600;
+            padding: 12px 16px;
+            border-bottom: 2px solid #bdd3f0;
+        }
+        .doc-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        .doc-note {
+            background-color: #f8fcff;
+            border-left: 5px solid #2563eb;
+            padding: 20px 24px;
+            margin: 32px 0;
+        }
+
+        .timeline-list {
+            margin: 30px 0;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 1px dashed #d1ddeb;
+        }
+        .timeline-year {
+            font-weight: 700;
+            color: #2563eb;
+            min-width: 80px;
+            font-size: 18px;
+        }
+
+        .btn-blue {
+            display: inline-block;
+            background-color: #2563eb;
+            color: white;
+            font-weight: 600;
+            padding: 10px 28px;
+            text-decoration: none;
+            border: 1px solid #2563eb;
+            transition: background 0.1s;
+            font-size: 15px;
+            border-radius: 0;
+        }
+        .btn-blue:hover {
+            background-color: #1a45c4;
+        }
+
+        hr {
+            border: 0;
+            border-top: 2px solid #e9edf2;
+            margin: 48px 0;
+        }
+
+        footer {
+            background-color: #1a2634;
+            color: #cad5e2;
+            padding: 48px 0 24px;
+            border-top: 3px solid #2563eb;
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 60px;
+            margin-bottom: 32px;
+        }
+        .footer-column h3 {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .footer-column a {
+            color: #b0c6e0;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .footer-column a:hover {
+            color: white;
+        }
+        .copyright {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid #334153;
+            color: #95abcc;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .doc-grid {
+                flex-direction: column;
+            }
+            .doc-sidebar {
+                width: 100%;
+                position: static;
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <div class="logo"><span>RNCYK</span> / Docs</div>
+            <nav>
+                <ul>
+                    <li><a href="https://rncyk.org">Home</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="doc-wrapper">
+        <div class="container doc-grid">
+
+            <aside class="doc-sidebar">
+
+                <div class="sidebar-title">Table of Contents</div>
+
+                <ul class="doc-toc">
+                    <li>
+                        <button class="toc-btn" data-target="intro">Introduction</button>
+
+                        <button class="toc-btn" data-target="mu">Main usage</button>
+
+                    </li>
+                </ul>
+
+                <div style="margin-top: 32px; padding: 16px; background-color: #f2f6ff; border: 1px solid #d0dfff;">
+                    <p style="color: #0f2b66; font-weight: 600;">stbdl</p>
+                    <p style="color: #1e3b7a; font-size: 14px;">Last Version</p>
+                </div>
+
+            </aside>
+
+            <main class="doc-main">
+                <h1 id="intro">Introduction</h1>
+                <p>stbdl (Simple Taskbar Decoration Library) is a simple taskbar decoration library.</p>
+                <p>Run the following command to install stbdl:</p>
+                <div class="doc-note"> <span style="color: #AAAAAA;">> pip install stbdl</span> </div>
+                <p>No dependencies need to be installed.</p>
+                <p>stbdl supports Python 3.x on Windows 10+</p>
+
+                <h1 id="mu">Main usage</h1>
+
+                <p>It mainly includes the following functions:</p>
+
+                <pre><code class="language-python">def window(path: Optional[str] = None, mode: int = 3) -> None: ...
+def expansion() -> None: ...
+def taskbar_switcher() -> wintypes.HWND: ...
+def border(hwnd: wintypes.HWND) -> None: ...
+def cleanup() -> bool: ...</code></pre>
+
+                <div class="doc-note">
+                    <span style="color: #AAAAAA;">These functions are all under the stbdl.* namespace.</span>
+                </div>
+
+                <h3><span style="color: #AAAAAA;">window</span> function</h3>
+
+                <p>The parameter <span style="color: #AAAAAA;">path</span> is the path to the background image, must be an absolute path. If no value is provided, it defaults to loading stbdl\white.png.</p>
+                <p>The parameter <span style="color: #AAAAAA;">mode</span> is the dynamic style, with the following meanings:</p>
+
+                <div class="doc-note">
+                    <p><span style="color: #AAAAAA;">mode=0: </span> <span style="color: #0077FF; margin-left: 6px;">Fade in/out</span></p>
+                    <p><span style="color: #AAAAAA;">mode=1: </span> <span style="color: #0077FF; margin-left: 6px;">Rotation</span></p>
+                    <p><span style="color: #AAAAAA;">mode=2: </span> <span style="color: #0077FF; margin-left: 6px;">Zoom</span></p>
+                    <p><span style="color: #AAAAAA;">mode=3: </span> <span style="color: #0077FF; margin-left: 6px;">Four-color cycle (red, green, blue, yellow)</span></p>
+                    <p><span style="color: #AAAAAA;">mode=4: </span> <span style="color: #0077FF; margin-left: 6px;">Color cycle</span></p>
+                </div>
+
+                <div class="doc-note">
+                    <p>If no value is provided, it defaults to 3. Also, the background window needs to be clicked on a blank area of the taskbar to bring the taskbar above it.</p>
+                    <p>Also, the background window needs to be clicked on a blank area of the taskbar to bring the taskbar above it.</p>
+                </div>
+
+                <p>The window function returns no value.</p>
+
+                <h3><span style="color: #AAAAAA;">expansion</span> function</h3>
+
+                <p>Enables the stbdl taskbar extension. The actual effect depends on system support. It prioritizes the mica effect (requires Windows 11), then the acrylic effect (requires Windows 10), and finally the blur effect.</p>
+
+                <p>The <span style="color: #AAAAAA;">expansion</span> function takes no parameters and returns no value.</p>
+
+                <h3><span style="color: #AAAAAA;">taskbar_switcher</span> function</h3>
+
+                <p>Gets the handle of the task switcher window (class name <span style="color: #AAAAAA;">MSTaskListWClass</span>). Returns None if not found.</p>
+
+                <p>The <span style="color: #AAAAAA;">taskbar_switcher</span> function takes no parameters.</p>
+
+                <h3><span style="color: #AAAAAA;">border</span> function</h3>
+
+                <p>Used to add a <span style="color: #AAAAAA;">border</span> to a specified window. It takes the handle of the target window as a parameter.</p>
+
+                <p>The <span style="color: #AAAAAA;">border</span> function returns no value.</p>
+
+                <h3><span style="color: #AAAAAA;">cleanup</span> function</h3>
+
+                <p>Clear all stbl windows by sending <span style="color: #AAAAAA;">WM_DESTROY</span> to each.</p>
+
+                <div class="doc-note">
+                    <p>The return value is of Boolean type. True if at least one stbl window was found and destroyed.</p>
+                </div>
+
+                <h2>Example</h2>
+
+                                <pre><code class="language-python">import stbdl
+
+stbdl.window()
+
+stbdl.expansion()
+
+h = stbdl.taskbar_switcher()
+
+stbdl.border(h)
+
+stbdl.cleanup()</code></pre>
+
+            </main>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+
+                <div class="footer-column">
+                    <h3>Src File</h3>
+                    <a href="https://github.com/theembodimentofdisharmony/stbdl">Repository link</a>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Installation</h3>
+                    <a href="https://pypi.org/project/stbdl/">pypi link</a>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Issues</h3>
+                    <a href="https://github.com/theembodimentofdisharmony/stbdl/issues">issues link</a>
+                </div>
+
+            </div>
+            <div class="copyright">
+                <p>rncyk</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <script>
+        (function() {
+            const tocButtons = document.querySelectorAll('.toc-btn');
+
+            const sections = Array.from(document.querySelectorAll('[id]'));
+
+            function setActive(btn) {
+                tocButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+
+            tocButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('data-target');
+                    if (!targetId) return;
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        setActive(this);
+                        // history.replaceState(null, null, ' ');
+                    }
+                });
+            });
+
+            function updateActiveOnScroll() {
+                let currentId = '';
+                const scrollPos = window.scrollY + 120;
+
+                for (let section of sections) {
+                    const sectionTop = section.offsetTop;
+                    if (sectionTop <= scrollPos) {
+                        currentId = section.id;
+                    } else {
+                        break;
+                    }
+                }
+
+                if (currentId) {
+                    tocButtons.forEach(btn => {
+                        if (btn.getAttribute('data-target') === currentId) {
+                            setActive(btn);
+                        }
+                    });
+                }
+            }
+
+            window.addEventListener('scroll', () => {
+                window.requestAnimationFrame(updateActiveOnScroll);
+            });
+            updateActiveOnScroll();
+        })();
+    </script>
+</body>
+</html>
