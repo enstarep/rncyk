@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Docs</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
     <style>
         * {
@@ -26,7 +25,7 @@
 
         header {
             background-color: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 2px solid #2563eb;
             position: fixed;
             width: 100%;
             top: 0;
@@ -78,7 +77,7 @@
         .doc-sidebar {
             flex: 0 0 280px;
             background-color: #ffffff;
-            border: 1px solid #edf2f7;
+            border: 1px solid #e9edf2;
             padding: 24px 0 24px 16px;
             position: sticky;
             top: 100px;
@@ -90,7 +89,7 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            color: #4b5563;
+            color: #2563eb;
             padding-left: 16px;
             margin-bottom: 20px;
         }
@@ -126,14 +125,33 @@
             color: #475569;
         }
         .toc-btn:hover {
-            background-color: #f8fafc;
-            border-left-color: #9bb7f4;
+            background-color: #e2efff;
+            border-left-color: #0077ff;
         }
         .toc-btn.active {
-            background-color: #eef4ff;
+            background-color: #d9eaff;
             border-left-color: #2563eb;
             color: #0f2b66;
             font-weight: 600;
+        }
+
+        .sidebar-promo {
+            margin-top: 32px;
+            padding: 16px;
+            background-color: #ffffff;
+            border: 1px solid #d0d9e8;
+            border-left: 6px solid #2563eb;
+        }
+        .sidebar-promo p:first-child {
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        .sidebar-promo p:last-child {
+            color: #aaaaaa;
+            font-size: 14px;
+            margin-bottom: 0;
         }
 
         .doc-main {
@@ -148,13 +166,15 @@
             font-weight: 700;
             color: #0a1a33;
             margin-bottom: 8px;
+            border-left: 6px solid #2563eb;
+            padding-left: 20px;
         }
         .doc-main h2 {
             font-size: 24px;
             font-weight: 600;
             color: #1e293b;
             margin: 48px 0 16px 0;
-            border-bottom: 1px solid #e9eef3;
+            border-bottom: 2px solid #2563eb;
             padding-bottom: 8px;
         }
         .doc-main h3 {
@@ -162,6 +182,18 @@
             font-weight: 600;
             color: #2d3c5e;
             margin: 36px 0 12px;
+            padding-left: 14px;
+            position: relative;
+        }
+        .doc-main h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.45em;
+            width: 8px;
+            height: 8px;
+            background-color: #0077ff;
+            border-radius: 50%;
         }
         .doc-main p {
             margin-bottom: 20px;
@@ -170,14 +202,15 @@
         .doc-main a {
             color: #2563eb;
             text-decoration: none;
+            border-bottom: 1px dotted #2563eb40;
         }
         .doc-main a:hover {
-            text-decoration: underline;
+            border-bottom: 1px solid #2563eb;
         }
 
         pre {
             background: #f8fafc;
-            border-left: 4px solid #2563eb;
+            border-left: 6px solid #0077ff;
             padding: 20px;
             font-size: 14px;
             font-family: 'SF Mono', 'Fira Code', monospace;
@@ -196,11 +229,11 @@
             font-size: 15px;
         }
         .doc-table th {
-            background-color: #f1f5f9;
-            color: #0f2b4f;
+            background-color: #2563eb;
+            color: white;
             font-weight: 600;
             padding: 12px 16px;
-            border-bottom: 2px solid #bdd3f0;
+            border-bottom: 2px solid #1a45c4;
         }
         .doc-table td {
             padding: 12px 16px;
@@ -209,55 +242,42 @@
         }
 
         .doc-note {
-            background-color: #f8fcff;
-            border-left: 5px solid #2563eb;
-            padding: 20px 24px;
-            margin: 32px 0;
+            background-color: #f5f7fc;
+            border-left: 6px solid #2563eb;
+            padding: 16px 22px;
+            margin: 28px 0;
         }
-
-        .timeline-list {
-            margin: 30px 0;
+        .doc-note p {
+            margin-bottom: 12px;
         }
-        .timeline-item {
-            display: flex;
-            gap: 20px;
-            padding: 16px 0;
-            border-bottom: 1px dashed #d1ddeb;
+        .doc-note p:last-child {
+            margin-bottom: 0;
         }
-        .timeline-year {
-            font-weight: 700;
+        .doc-note h1, .doc-note h2, .doc-note h3 {
+            margin-top: 0;
+            margin-bottom: 14px;
+            border-bottom: none;
+            padding-left: 0;
+        }
+        .doc-note h1::before, .doc-note h3::before {
+            display: none;
+        }
+        .doc-note strong {
             color: #2563eb;
-            min-width: 80px;
-            font-size: 18px;
-        }
-
-        .btn-blue {
-            display: inline-block;
-            background-color: #2563eb;
-            color: white;
-            font-weight: 600;
-            padding: 10px 28px;
-            text-decoration: none;
-            border: 1px solid #2563eb;
-            transition: background 0.1s;
-            font-size: 15px;
-            border-radius: 0;
-        }
-        .btn-blue:hover {
-            background-color: #1a45c4;
         }
 
         hr {
             border: 0;
-            border-top: 2px solid #e9edf2;
+            border-top: 2px solid #2563eb;
             margin: 48px 0;
+            opacity: 0.3;
         }
 
         footer {
             background-color: #1a2634;
             color: #cad5e2;
             padding: 48px 0 24px;
-            border-top: 3px solid #2563eb;
+            border-top: 4px solid #2563eb;
         }
         .footer-content {
             display: flex;
@@ -270,6 +290,8 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 20px;
+            border-left: 4px solid #0077ff;
+            padding-left: 12px;
         }
         .footer-column a {
             color: #b0c6e0;
@@ -278,7 +300,7 @@
             margin-bottom: 10px;
         }
         .footer-column a:hover {
-            color: white;
+            color: #0077ff;
         }
         .copyright {
             text-align: center;
@@ -316,23 +338,28 @@
         <div class="container doc-grid">
 
             <aside class="doc-sidebar">
-
                 <div class="sidebar-title">Table of Contents</div>
-
                 <ul class="doc-toc">
                     <li>
                         <button class="toc-btn" data-target="intro">Introduction</button>
-
+                    </li>
+                    <li>
                         <button class="toc-btn" data-target="mu">Main usage</button>
-
+                        <ul class="doc-toc" style="list-style: none; padding-left:0;">
+                            <li class="toc-level-3"><button class="toc-btn" data-target="window-func">window function</button></li>
+                            <li class="toc-level-3"><button class="toc-btn" data-target="expansion-func">expansion function</button></li>
+                            <li class="toc-level-3"><button class="toc-btn" data-target="taskbar-switcher-func">taskbar_switcher function</button></li>
+                            <li class="toc-level-3"><button class="toc-btn" data-target="border-func">border function</button></li>
+                            <li class="toc-level-3"><button class="toc-btn" data-target="cleanup-func">cleanup function</button></li>
+                            <li class="toc-level-2"><button class="toc-btn" data-target="example">Example</button></li>
+                        </ul>
                     </li>
                 </ul>
 
-                <div style="margin-top: 32px; padding: 16px; background-color: #f2f6ff; border: 1px solid #d0dfff;">
-                    <p style="color: #0f2b66; font-weight: 600;">stbdl</p>
-                    <p style="color: #1e3b7a; font-size: 14px;">Last Version</p>
+                <div class="sidebar-promo">
+                    <p>stbdl</p>
+                    <p>Last Version</p>
                 </div>
-
             </aside>
 
             <main class="doc-main">
@@ -357,7 +384,7 @@ def cleanup() -> bool: ...</code></pre>
                     <span style="color: #AAAAAA;">These functions are all under the stbdl.* namespace.</span>
                 </div>
 
-                <h3><span style="color: #AAAAAA;">window</span> function</h3>
+                <h3 id="window-func"><span style="color: #AAAAAA;">window</span> function</h3>
 
                 <p>The parameter <span style="color: #AAAAAA;">path</span> is the path to the background image, must be an absolute path. If no value is provided, it defaults to loading stbdl\white.png.</p>
                 <p>The parameter <span style="color: #AAAAAA;">mode</span> is the dynamic style, with the following meanings:</p>
@@ -377,35 +404,35 @@ def cleanup() -> bool: ...</code></pre>
 
                 <p>The window function returns no value.</p>
 
-                <h3><span style="color: #AAAAAA;">expansion</span> function</h3>
+                <h3 id="expansion-func"><span style="color: #AAAAAA;">expansion</span> function</h3>
 
                 <p>Enables the stbdl taskbar extension. The actual effect depends on system support. It prioritizes the mica effect (requires Windows 11), then the acrylic effect (requires Windows 10), and finally the blur effect.</p>
 
                 <p>The <span style="color: #AAAAAA;">expansion</span> function takes no parameters and returns no value.</p>
 
-                <h3><span style="color: #AAAAAA;">taskbar_switcher</span> function</h3>
+                <h3 id="taskbar-switcher-func"><span style="color: #AAAAAA;">taskbar_switcher</span> function</h3>
 
                 <p>Gets the handle of the task switcher window (class name <span style="color: #AAAAAA;">MSTaskListWClass</span>). Returns None if not found.</p>
 
                 <p>The <span style="color: #AAAAAA;">taskbar_switcher</span> function takes no parameters.</p>
 
-                <h3><span style="color: #AAAAAA;">border</span> function</h3>
+                <h3 id="border-func"><span style="color: #AAAAAA;">border</span> function</h3>
 
                 <p>Used to add a <span style="color: #AAAAAA;">border</span> to a specified window. It takes the handle of the target window as a parameter.</p>
 
                 <p>The <span style="color: #AAAAAA;">border</span> function returns no value.</p>
 
-                <h3><span style="color: #AAAAAA;">cleanup</span> function</h3>
+                <h3 id="cleanup-func"><span style="color: #AAAAAA;">cleanup</span> function</h3>
 
-                <p>Clear all stbl windows by sending <span style="color: #AAAAAA;">WM_DESTROY</span> to each.</p>
+                <p>Clear all stbdl windows by sending <span style="color: #AAAAAA;">WM_DESTROY</span> to each.</p>
 
                 <div class="doc-note">
-                    <p>The return value is of Boolean type. True if at least one stbl window was found and destroyed.</p>
+                    <p>The return value is of Boolean type. True if at least one stbdl window was found and destroyed.</p>
                 </div>
 
-                <h2>Example</h2>
+                <h2 id="example">Example</h2>
 
-                                <pre><code class="language-python">import stbdl
+                <pre><code class="language-python">import stbdl
 
 stbdl.window()
 
@@ -416,7 +443,6 @@ h = stbdl.taskbar_switcher()
 stbdl.border(h)
 
 stbdl.cleanup()</code></pre>
-
             </main>
 
         </div>
@@ -425,22 +451,18 @@ stbdl.cleanup()</code></pre>
     <footer>
         <div class="container">
             <div class="footer-content">
-
                 <div class="footer-column">
                     <h3>Src File</h3>
                     <a href="https://github.com/theembodimentofdisharmony/stbdl">Repository link</a>
                 </div>
-
                 <div class="footer-column">
                     <h3>Installation</h3>
                     <a href="https://pypi.org/project/stbdl/">pypi link</a>
                 </div>
-
                 <div class="footer-column">
                     <h3>Issues</h3>
                     <a href="https://github.com/theembodimentofdisharmony/stbdl/issues">issues link</a>
                 </div>
-
             </div>
             <div class="copyright">
                 <p>rncyk</p>
@@ -454,7 +476,6 @@ stbdl.cleanup()</code></pre>
     <script>
         (function() {
             const tocButtons = document.querySelectorAll('.toc-btn');
-
             const sections = Array.from(document.querySelectorAll('[id]'));
 
             function setActive(btn) {
@@ -474,7 +495,6 @@ stbdl.cleanup()</code></pre>
                             block: 'start'
                         });
                         setActive(this);
-                        // history.replaceState(null, null, ' ');
                     }
                 });
             });
@@ -482,7 +502,6 @@ stbdl.cleanup()</code></pre>
             function updateActiveOnScroll() {
                 let currentId = '';
                 const scrollPos = window.scrollY + 120;
-
                 for (let section of sections) {
                     const sectionTop = section.offsetTop;
                     if (sectionTop <= scrollPos) {
@@ -491,7 +510,6 @@ stbdl.cleanup()</code></pre>
                         break;
                     }
                 }
-
                 if (currentId) {
                     tocButtons.forEach(btn => {
                         if (btn.getAttribute('data-target') === currentId) {
